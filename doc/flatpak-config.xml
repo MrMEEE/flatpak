@@ -89,6 +89,40 @@
         </variablelist>
 
         <para>
+            Flatpak also supports central, system-managed configuration in
+            <filename>/etc/flatpak/config</filename> and
+            <filename>/etc/flatpak/config.d/*.conf</filename>.
+            These files use an ini-style format with a <literal>[core]</literal> group.
+            The following central keys are supported:
+        </para>
+
+        <variablelist>
+            <varlistentry>
+                <term><varname>config-lockdown</varname></term>
+                <listitem><para>
+                    If set to <literal>true</literal>, central repository policy is enforced,
+                    and user-controlled directory overrides via <envar>FLATPAK_*_DIR</envar>
+                    environment variables are ignored with a warning.
+                </para></listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><varname>allow-user-remotes</varname></term>
+                <listitem><para>
+                    If set to <literal>false</literal> while <varname>config-lockdown</varname>
+                    is enabled, users cannot add or modify user-defined remotes.
+                    Centrally configured remotes remain available.
+                </para></listitem>
+            </varlistentry>
+        </variablelist>
+
+        <para>
+            When central lockdown is enabled, remote definitions from
+            <filename>/etc/flatpak/remotes.d/*.flatpakrepo</filename> are applied to
+            user installations as centrally managed remotes.
+        </para>
+
+        <para>
             For configuration of individual remotes, see
             <citerefentry><refentrytitle>flatpak-remote-modify</refentrytitle><manvolnum>1</manvolnum></citerefentry>.
             For configuration of individual applications, see
